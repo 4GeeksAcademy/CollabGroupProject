@@ -41,7 +41,9 @@ class Exhibits(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     exhibit_name = db.Column(db.String(250), nullable=False)
     favorite_id = db.Column(db.Integer, db.ForeignKey('favorites.id'))
-    favorite = db.relationship('Favorite', backref=db.backref('exhibits', lazy=True)) 
+    artist_id = db.Column(db.Integer, db.ForeignKey('artists.id') )
+    favorite = db.relationship('Favorite', backref=db.backref('exhibits', lazy=True))
+    artist = db.relationship('Artist', backref=db.backref('exhibits', lazy=True) )
 
     def __repr__(self):
         return f'<Exhibit {self.exhibit_name}>'
@@ -51,6 +53,7 @@ class Exhibits(db.Model):
             "id": self.id,
             "exhibit_name": self.exhibit_name,
             "favorite_id": self.favorite_id,
+            "artist_id": self.artist_id,
         }
     
 class Artist(db.Model):
